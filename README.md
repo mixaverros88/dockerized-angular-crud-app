@@ -1,5 +1,11 @@
 # RestFull
 
+
+install server --> npm install -g json-server
+
+run server --> json-server -p 555 products.json
+
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.8.
 
 ## Development server
