@@ -1,5 +1,5 @@
 import { Product } from './product/product';
-import { Component, OnInit, OnChanges, Injectable  } from '@angular/core';
+import { Component, OnInit, Injectable  } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { empty } from 'rxjs';
 
@@ -10,7 +10,7 @@ import { empty } from 'rxjs';
 })
 
 @Injectable()
-export class AppComponent implements OnInit, OnChanges{
+export class AppComponent implements OnInit{
   id: number;
   name:string ='';
   color:string;
