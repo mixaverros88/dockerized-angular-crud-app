@@ -33,7 +33,7 @@ export class ProductComponent implements OnInit {
   }
 
   ngOnInit() {
-    if ( this.color !== '') { this.getProducts(); }
+    this.getProducts();
     this.getProductsTotalProducts();
   }
 
@@ -55,12 +55,15 @@ export class ProductComponent implements OnInit {
   }
 
   onNameKeyUp(event: any) {
-    console.log( '-->' + event.target.value);
     this.name = event.target.value;
     this.found = false;
-    if (this.name.length >= 3) {
-      this.getProduct(event);
-    }
+    this.getProducts();
+  }
+
+  onColorKeyUp(event: any) {
+    this.color = event.target.value;
+    this.found = false;
+    this.getProducts();
   }
 
   getProductsTotalProducts() {
@@ -76,9 +79,17 @@ export class ProductComponent implements OnInit {
   }
 
   getProducts() {
+    let urlRName = `http://localhost:555/products/?_page=${this.curentPage}&_limit=${this.howManyRows}&_order=${this.orderBy}&_sort=${this.orderByColumn}`;
+
+    if ( this.name !== '' ) {
+      urlRName = urlRName + `&name=${this.name}`;
+    }
+    // if ( this.color !== '' ) {
+    //   urlRName = urlRName + `&color=${this.color}`;
+    // }
     this.
     httpClient.
-    get(`http://localhost:555/products/?_page=${this.curentPage}&_limit=${this.howManyRows}&_order=${this.orderBy}&_sort=${this.orderByColumn}`)
+    get(urlRName)
     .subscribe(
       (data: any []) => {
        if ( data.length ) {
@@ -149,9 +160,6 @@ export class ProductComponent implements OnInit {
        this.ngOnInit();
       }
     );
-  }
-  senfValuesToModalProduct(product: Product) {
-
   }
 
   deleteProduct(id: number ) {
