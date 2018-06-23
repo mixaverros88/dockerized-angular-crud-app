@@ -46,13 +46,6 @@
     <strong>Success!</strong>{{message}}
   </div>
 
-  <select (change)="onChange($event.target.value)">
-    <option>2</option>
-    <option>3</option>
-    <option>4</option>
-    <option>5</option>
-    <option>6</option>
-</select>
 
   <table class="table">
     <tr>
@@ -60,8 +53,21 @@
       <th (click)="onChangeOrderColumn('name')">Name</th>
       <th (click)="onChangeOrderColumn('color')">Color</th>
       <th (click)="onChangeOrderColumn('price')">Price</th>
-      <th>Λειτουργίες</th>
-    </tr>
+      <th>Λειτουργίες
+        <select (change)="onChange($event.target.value)">
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+            <option>6</option>
+        </select>   
+
+        <select (change)="onChangeOrder($event.target.value)">
+            <option>asc</option>
+            <option>desc</option>
+        </select>   
+      </th>
+
     <tr *ngFor="let pr of data">
       <td>{{pr.id}}</td>
       <td>{{pr.name }}</td>
