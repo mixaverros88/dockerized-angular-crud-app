@@ -54,13 +54,12 @@
     <option>6</option>
 </select>
 
-
   <table class="table">
     <tr>
-      <th>Id</th>
-      <th>Name</th>
-      <th>Color</th>
-      <th>Price</th>
+      <th (click)="onChangeOrderColumn('id')">Id</th>
+      <th (click)="onChangeOrderColumn('name')">Name</th>
+      <th (click)="onChangeOrderColumn('color')">Color</th>
+      <th (click)="onChangeOrderColumn('price')">Price</th>
       <th>Λειτουργίες</th>
     </tr>
     <tr *ngFor="let pr of data">

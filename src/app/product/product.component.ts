@@ -26,6 +26,7 @@ export class ProductComponent implements OnInit {
   totalProducts: number;
   curentPage = 1;
   paginationLength = 0;
+  orderByColumn = 'id';
   // PAGINATION VALUES
   constructor (private httpClient: HttpClient) {
   }
@@ -74,7 +75,7 @@ export class ProductComponent implements OnInit {
   }
 
   getProducts() {
-    this.httpClient.get(`http://localhost:555/products/?_page=${this.curentPage}&_limit=${this.howManyRows}`)
+    this.httpClient.get(`http://localhost:555/products/?_page=${this.curentPage}&_limit=${this.howManyRows}&_order=asc&_sort=${this.orderByColumn}`)
     .subscribe(
       (data: any []) => {
        if ( data.length ) {
@@ -131,7 +132,6 @@ export class ProductComponent implements OnInit {
     let params = new HttpParams();
     params = params.append('name', name);
     params = params.append('color', color);
-  
 
     this.httpClient.put(`http://localhost:555/products/${id}`,
     {
@@ -161,6 +161,11 @@ export class ProductComponent implements OnInit {
     );
   }
 
+  onChangeOrderColumn(column: string) {
+    this.orderByColumn = column;
+    console.log(column);
+    this.ngOnInit();
+  }
 
   onSelectedProduct(pr) {
     this.selectedProduct = pr;
