@@ -5,3 +5,11 @@ label {
 button.btn.btn-primary {
     margin-left: 10px;
 }
+
+select {
+    width: 70px;
+    margin-right: 10px;
+    background-color: #337ab7;
+    color: white;
+    border: solid 2px #1d4669;
+}
