@@ -1,19 +1,22 @@
 {
-  "posts": [
+  "products": [
     {
-      "id": 1,
-      "title": "json-server",
-      "author": "typicode"
-    }
-  ],
-  "comments": [
+      "name": "T-SHIRT",
+      "color": "blue 1",
+      "price": "10.30",
+      "id": 1
+    },
     {
-      "id": 1,
-      "body": "some comment",
-      "postId": 1
+      "id": 2,
+      "name": "SHIRT",
+      "color": "red",
+      "price": "11.00"
+    },
+    {
+      "name": "TEST",
+      "color": "RED",
+      "price": "22",
+      "id": 3
     }
-  ],
-  "profile": {
-    "name": "typicode"
-  }
+  ]
 }

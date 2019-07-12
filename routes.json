@@ -1,0 +1,7 @@
+{
+  "/products/list": "/products",
+  "/products/get/:id": "/products/:id",
+  "/products/create": "/products",
+  "/products/update/:id": "/products/:id",
+  "/products/delete/:id": "/products/:id"
+}
