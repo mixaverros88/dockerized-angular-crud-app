@@ -12,12 +12,15 @@ import { empty } from 'rxjs';
 
 @Injectable()
 export class ProductComponent implements OnInit {
+
+
+  URL_PRODUCT_PATH = `http://localhost:555/products`;
   id: number;
   name = '';
-  color: string;
+  color = '';
   price: number;
   found: boolean;
-  data: any [];
+  products: any [];
   message: string;
   product: Product;
   selectedProduct: Product;
@@ -27,14 +30,19 @@ export class ProductComponent implements OnInit {
   curentPage = 1;
   paginationLength = 0;
   orderByColumn = 'id';
-  orderBy = 'desc';
+  orderBy = 'asc';
   // PAGINATION VALUES
+
   constructor (private httpClient: HttpClient) {
   }
 
   ngOnInit() {
     this.getProducts();
-    this.getProductsTotalProducts();
+  }
+
+  changeOrder(order) {
+    this.orderBy = order;
+    this.getProducts();
   }
 
   onChange(deviceValue) {
@@ -45,8 +53,6 @@ export class ProductComponent implements OnInit {
 
   getPagination(totalProducts, howManyRows) {
     this.paginationLength = Math.ceil(totalProducts / howManyRows);
-    console.log(totalProducts + ' / ' + howManyRows );
-    console.log(this.paginationLength);
   }
 
   getCurentPage(curentPage) {
@@ -54,46 +60,61 @@ export class ProductComponent implements OnInit {
    this.getProducts();
   }
 
+  /**
+   * Search products by name
+   * @param event
+   */
   onNameKeyUp(event: any) {
     this.name = event.target.value;
     this.found = false;
     this.getProducts();
   }
 
+  /**
+   * Search products by color
+   * @param event
+   */
   onColorKeyUp(event: any) {
     this.color = event.target.value;
     this.found = false;
     this.getProducts();
   }
 
-  getProductsTotalProducts() {
-    this.httpClient.get(`http://localhost:555/products`)
-    .subscribe(
-      (data: any []) => {
-       if ( data.length ) {
-        this.totalProducts = data.length;
-        console.log(data.length);
-       }
-      }
-    );
+  /**
+   * Search products by price
+   * @param event
+   */
+  onPriceKeyUp(event: any) {
+    this.price = event.target.value;
+    this.found = false;
+    this.getProducts();
   }
 
   getProducts() {
-    let urlRName = `http://localhost:555/products/?_page=${this.curentPage}&_limit=${this.howManyRows}&_order=${this.orderBy}&_sort=${this.orderByColumn}`;
+    let urlRName = this.URL_PRODUCT_PATH
+    + `?_page=${this.curentPage}`
+    + `&_limit=${this.howManyRows}`
+    + `&_order=${this.orderBy}`
+    + `&_sort=${this.orderByColumn}`;
 
     if ( this.name !== '' ) {
       urlRName = urlRName + `&name=${this.name}`;
     }
-    // if ( this.color !== '' ) {
-    //   urlRName = urlRName + `&color=${this.color}`;
-    // }
-    this.
-    httpClient.
-    get(urlRName)
+
+    if ( this.color !== '') {
+      urlRName = urlRName + `&color=${this.color}`;
+    }
+
+    if ( this.price != null) {
+      urlRName = urlRName + `&price=${this.price}`;
+    }
+
+    this.httpClient.get(urlRName)
     .subscribe(
       (data: any []) => {
        if ( data.length ) {
-          this.data = data;
+          this.products = data;
+          this.totalProducts = data.length;
        }
       }
     );
@@ -109,7 +130,7 @@ export class ProductComponent implements OnInit {
     params = params.append('color', event.target.value);
     params = params.append('name', 'mike');
 
-    this.httpClient.get(`http://localhost:555/products`,  {headers , params })
+    this.httpClient.get(this.URL_PRODUCT_PATH,  {headers , params })
     .subscribe(
       (data: any []) => {
        if ( data.length ) {
@@ -123,7 +144,7 @@ export class ProductComponent implements OnInit {
   }
 
   postProduct(name: string, color: string, price: number): void {
-    this.httpClient.post(`http://localhost:555/products/`,
+    this.httpClient.post(this.URL_PRODUCT_PATH,
     {
       name: name,
       color: color,
@@ -140,14 +161,7 @@ export class ProductComponent implements OnInit {
 
   editProduct(id: number, name: string, color: string, price: number): void {
 
-    let headers = new HttpHeaders();
-    headers = headers.append('Content-Type', 'application/json');
-
-    let params = new HttpParams();
-    params = params.append('name', name);
-    params = params.append('color', color);
-
-    this.httpClient.put(`http://localhost:555/products/${id}`,
+    this.httpClient.put(this.URL_PRODUCT_PATH + `/${id}`,
     {
       name: name,
       color: color,
@@ -163,19 +177,18 @@ export class ProductComponent implements OnInit {
   }
 
   deleteProduct(id: number ) {
-    this.httpClient.delete(`http://localhost:555/products/${id}`)
+    this.httpClient.delete(this.URL_PRODUCT_PATH + `/${id}`)
     .subscribe(
       (data: any) => {
         this.message = 'To προϊόν διεγάφει επιτυχώς';
-        this.ngOnInit();
+        this.getProducts();
       }
     );
   }
 
   onChangeOrderColumn(column: string) {
     this.orderByColumn = column;
-    console.log(column);
-    this.ngOnInit();
+    this.getProducts();
   }
 
   onSelectedProduct(pr) {
@@ -183,15 +196,8 @@ export class ProductComponent implements OnInit {
   }
 
   onChangeOrder(orderBy) {
-    console.log(orderBy);
     this.orderBy = orderBy;
-    this.ngOnInit();
+    this.getProducts();
   }
 
 }
-
-
-
-
-
-
