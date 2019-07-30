@@ -13,19 +13,17 @@ import { empty } from 'rxjs';
 @Injectable()
 export class ProductComponent implements OnInit {
 
-
   URL_PRODUCT_PATH = `http://localhost:555/products`;
   id: number;
   name = '';
   color = '';
   price: number;
-  found: boolean;
   products: any [];
   message: string;
   product: Product;
   selectedProduct: Product;
   // PAGINATION VALUES
-  howManyRows = 2;
+  howManyRows = 6;
   totalProducts: number;
   curentPage = 1;
   paginationLength = 0;
@@ -33,8 +31,7 @@ export class ProductComponent implements OnInit {
   orderBy = 'asc';
   // PAGINATION VALUES
 
-  constructor (private httpClient: HttpClient) {
-  }
+  constructor (private httpClient: HttpClient) { }
 
   ngOnInit() {
     this.getProducts();
@@ -66,7 +63,6 @@ export class ProductComponent implements OnInit {
    */
   onNameKeyUp(event: any) {
     this.name = event.target.value;
-    this.found = false;
     this.getProducts();
   }
 
@@ -76,7 +72,6 @@ export class ProductComponent implements OnInit {
    */
   onColorKeyUp(event: any) {
     this.color = event.target.value;
-    this.found = false;
     this.getProducts();
   }
 
@@ -86,7 +81,6 @@ export class ProductComponent implements OnInit {
    */
   onPriceKeyUp(event: any) {
     this.price = event.target.value;
-    this.found = false;
     this.getProducts();
   }
 
@@ -120,29 +114,6 @@ export class ProductComponent implements OnInit {
     );
   }
 
-  getProduct(event) {
-
-    let headers = new HttpHeaders();
-    headers  = headers.append('header-1', 'value-1');
-    headers  = headers.append('header-2', 'value-2');
-
-    let params = new HttpParams();
-    params = params.append('color', event.target.value);
-    params = params.append('name', 'mike');
-
-    this.httpClient.get(this.URL_PRODUCT_PATH,  {headers , params })
-    .subscribe(
-      (data: any []) => {
-       if ( data.length ) {
-          this.product = data[0];
-          this.price = data[0].price;
-          this.found = true;
-          this.ngOnInit();
-       }
-      }
-    );
-  }
-
   postProduct(name: string, color: string, price: number): void {
     this.httpClient.post(this.URL_PRODUCT_PATH,
     {
@@ -152,15 +123,13 @@ export class ProductComponent implements OnInit {
     })
     .subscribe(
       (data: any) => {
-       console.log(data);
-       this.message = 'Επιτυχής Εισαγωγή Προϊόντος';
-       this.ngOnInit();
+        this.message = 'Επιτυχής Εισαγωγή Προϊόντος';
+        this.products.push(data);   
       }
     );
   }
 
   editProduct(id: number, name: string, color: string, price: number): void {
-
     this.httpClient.put(this.URL_PRODUCT_PATH + `/${id}`,
     {
       name: name,
@@ -169,9 +138,8 @@ export class ProductComponent implements OnInit {
     })
     .subscribe(
       (data: any) => {
-       console.log(data);
        this.message = 'Επιτυχής Επεξεργασία Προϊόντος';
-       this.ngOnInit();
+       this.getProducts();
       }
     );
   }
@@ -181,7 +149,7 @@ export class ProductComponent implements OnInit {
     .subscribe(
       (data: any) => {
         this.message = 'To προϊόν διεγάφει επιτυχώς';
-        this.getProducts();
+        this.products.pop(data);  
       }
     );
   }
@@ -191,13 +159,14 @@ export class ProductComponent implements OnInit {
     this.getProducts();
   }
 
-  onSelectedProduct(pr) {
-    this.selectedProduct = pr;
+  onSelectedProduct(product: Product) {
+    this.selectedProduct = product;
   }
 
-  onChangeOrder(orderBy) {
+  onChangeOrder(orderBy: string) {
     this.orderBy = orderBy;
     this.getProducts();
   }
+
 
 }

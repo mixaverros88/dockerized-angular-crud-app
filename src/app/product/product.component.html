@@ -2,6 +2,10 @@
 
 <div class="container">
 
+  <div *ngIf="message" class="alert alert-success">
+    <strong>{{message}}</strong>
+  </div>
+
   <h3>Search</h3>
   <form class="form-inline">
     <div class="form-group">
@@ -17,9 +21,7 @@
         <input type="text" (keyup)="onPriceKeyUp($event)">
     </div>
   </form>
-  <div *ngIf="message" class="alert alert-success">
-    <strong>Success!</strong>{{message}}
-  </div>
+
 
   <table class="table">
     <tr>
