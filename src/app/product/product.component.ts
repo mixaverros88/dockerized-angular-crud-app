@@ -149,7 +149,7 @@ export class ProductComponent implements OnInit {
     .subscribe(
       (data: any) => {
         this.message = 'To προϊόν διεγάφει επιτυχώς';
-        this.products.pop(data);  
+        this.products.pop();  
       }
     );
   }
