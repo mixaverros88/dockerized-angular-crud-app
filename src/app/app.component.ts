@@ -2,6 +2,7 @@ import { Product } from './product/product';
 import { Component, OnInit, Injectable  } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { empty } from 'rxjs';
+import { ConstantsService } from './common/services/constants.service';
 
 @Component({
   selector: 'app-root',
@@ -11,6 +12,8 @@ import { empty } from 'rxjs';
 
 @Injectable()
 export class AppComponent implements OnInit{
+
+  URL_PRODUCT_PATH: string;
   id: number;
   name:string ='';
   color:string;
@@ -20,7 +23,8 @@ export class AppComponent implements OnInit{
   message: string;
   product: Product;
 
-  constructor (private httpClient: HttpClient) {
+  constructor (private httpClient: HttpClient, private _constant: ConstantsService) {
+    this.URL_PRODUCT_PATH = this._constant.baseAppUrl;
   }
 
   ngOnInit() {
@@ -42,7 +46,7 @@ export class AppComponent implements OnInit{
   getProducts() {
 
 
-    this.httpClient.get(`http://localhost:555/products/`)
+    this.httpClient.get(this.URL_PRODUCT_PATH)
     .subscribe(
       (data: any []) => {
        if( data.length ) {
@@ -63,7 +67,7 @@ export class AppComponent implements OnInit{
     params = params.append('color', event.target.value);
     params = params.append('name', 'mike');
 
-    this.httpClient.get(`http://localhost:555/products`,  {headers , params })
+    this.httpClient.get(this.URL_PRODUCT_PATH,  {headers , params })
     // this.httpClient.get(`http://localhost:555/products/?color=${this.name}`)
     .subscribe(
       (data: any []) => {
@@ -78,7 +82,7 @@ export class AppComponent implements OnInit{
   }
 
   postProduct(name: string, color: string, price: number): void {
-    this.httpClient.post(`http://localhost:555/products/`,
+    this.httpClient.post(this.URL_PRODUCT_PATH,
     {
       name: name,
       color: color,
@@ -94,7 +98,7 @@ export class AppComponent implements OnInit{
   }
 
   updateProduct(product: Product) {
-    this.httpClient.put(`http://localhost:555/products/`, product)
+    this.httpClient.put(this.URL_PRODUCT_PATH, product)
     .subscribe(
       (data: any) => {
         this.message = 'To προϊόν επεξεργάστικε επιτυχώς';

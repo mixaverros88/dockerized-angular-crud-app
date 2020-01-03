@@ -2,6 +2,7 @@ import { Product } from './../product/product';
 import { Component, OnInit, Injectable  } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { empty } from 'rxjs';
+import {ConstantsService} from '../common/services/constants.service';
 
 
 @Component({
@@ -10,10 +11,14 @@ import { empty } from 'rxjs';
   styleUrls: ['./product.component.css']
 })
 
+
+
 @Injectable()
 export class ProductComponent implements OnInit {
 
-  URL_PRODUCT_PATH = `http://localhost:555/products`;
+
+
+  URL_PRODUCT_PATH: string;
   id: number;
   name = '';
   color = '';
@@ -31,7 +36,9 @@ export class ProductComponent implements OnInit {
   orderBy = 'asc';
   // PAGINATION VALUES
 
-  constructor (private httpClient: HttpClient) { }
+  constructor (private httpClient: HttpClient, private _constant: ConstantsService) {
+    this.URL_PRODUCT_PATH = this._constant.baseAppUrl;
+  }
 
   ngOnInit() {
     this.getProducts();
