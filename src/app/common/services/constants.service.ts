@@ -1,6 +1,6 @@
 import { Component, OnInit, Injectable  } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, Map } from 'rxjs';
 
 export interface Url {
   url: string;
@@ -10,20 +10,21 @@ export interface Url {
 export class ConstantsService implements OnInit {
 
   baseAppUrl: string;
-  private _jsonURL = 'assets/fake_server_ip.json';
-  urls: Url[];
 
   constructor(private http: HttpClient) {
 
     this.getJSON().subscribe(data => {
-      this.urls = data;
-      this.baseAppUrl = this.urls[0].url;
-      console.log(this.urls[0].url);
+      let   urls: Url[];
+      urls = data;
+      this.baseAppUrl = urls[0].url;
+      // console.log(this.urls[0].url);
+      console.log(this.baseAppUrl);
     });
+
   }
 
   public getJSON(): Observable<any> {
-    return this.http.get(this._jsonURL);
+    return this.http.get('assets/fake_server_ip.json');
   }
   ngOnInit() {
   }

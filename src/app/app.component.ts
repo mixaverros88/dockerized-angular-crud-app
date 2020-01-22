@@ -24,13 +24,15 @@ export class AppComponent implements OnInit{
   product: Product;
 
   constructor (private httpClient: HttpClient, private _constant: ConstantsService) {
-    this.URL_PRODUCT_PATH = this._constant.baseAppUrl;
+    this.URL_PRODUCT_PATH = _constant.baseAppUrl;
+    console.log(_constant.baseAppUrl);
   }
 
   ngOnInit() {
     console.log('This is in the OnInit lifecycle hook');
     if(this.color !=''){
       this.getProducts();
+      console.log(this.URL_PRODUCT_PATH);
     }
   }
 
@@ -44,6 +46,7 @@ export class AppComponent implements OnInit{
   }
 
   getProducts() {
+
 
 
     this.httpClient.get(this.URL_PRODUCT_PATH)
@@ -67,6 +70,7 @@ export class AppComponent implements OnInit{
     params = params.append('color', event.target.value);
     params = params.append('name', 'mike');
 
+    console.log(this.URL_PRODUCT_PATH);
     this.httpClient.get(this.URL_PRODUCT_PATH,  {headers , params })
     // this.httpClient.get(`http://localhost:555/products/?color=${this.name}`)
     .subscribe(
