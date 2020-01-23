@@ -37,10 +37,11 @@ export class ProductComponent implements OnInit {
   // PAGINATION VALUES
 
   constructor (private httpClient: HttpClient, private _constant: ConstantsService) {
-    this.URL_PRODUCT_PATH = this._constant.baseAppUrl;
+    //this.URL_PRODUCT_PATH = this._constant.baseAppUrl;
   }
 
   ngOnInit() {
+    this.URL_PRODUCT_PATH = 'http://fake_server:3000/products';
     this.getProducts();
   }
 

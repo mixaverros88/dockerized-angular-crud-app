@@ -21,4 +21,10 @@ docker cp routes.json fake_server:/usr/local/lib/node_modules/json-server/routes
 docker cp products.json fake_server:/data/products.json
 docker cp routes.json fake_server:/data/routes.json
 echo "Step 11: run the image "
-docker run -d -p 8080:80 angular_simple_crud
+docker run -d -p 8080:80 --name angular_simple_crud_app angular_simple_crud
+echo "Step 12: create a network"
+docker network create --driver bridge isolated 
+echo "Assing the fake_server container into the network"
+docker network connect isolated fake_server
+echo "Assing the angular_simple_crud_app container into the network"
+docker network connect isolated angular_simple_crud_app

@@ -1,6 +1,6 @@
 import { Component, OnInit, Injectable  } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, Map } from 'rxjs';
+import { Observable } from 'rxjs';
 
 export interface Url {
   url: string;
