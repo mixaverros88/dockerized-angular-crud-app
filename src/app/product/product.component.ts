@@ -41,7 +41,7 @@ export class ProductComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.URL_PRODUCT_PATH = 'fake_server/products';
+    this.URL_PRODUCT_PATH = 'http://fake_server:3000/products';
     this.getProducts();
   }
 
