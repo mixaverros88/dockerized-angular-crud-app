@@ -1,5 +1,11 @@
 # Very simple CRUD operations with Angular
 
+![preview image](https://github.com/mixaverros88/angular-Rest-Crud/blob/master/icons/docker_overview.jpg)
+
+This example combines 2 containers inside a bridge network. The first container runs the angular app and the other container the json server.
+
+We use the bridge network in order to reach the json server without the IP address but with the container name.
+
 # json-server instructions
 
 1. Install server: npm install -g json-server
