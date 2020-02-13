@@ -6,6 +6,9 @@ This example combines 2 containers inside a bridge network. The first container 
 
 We use the bridge network in order to reach the json server without the IP address but with the container name.
 
+### Development docker file ###
+create a volume in /usr/share/nginx/html
+
 # json-server instructions
 
 1. Install server: npm install -g json-server
