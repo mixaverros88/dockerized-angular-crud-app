@@ -1,6 +1,6 @@
 # Very simple CRUD operations with Angular
 
-![preview image](https://github.com/mixaverros88/angular-Rest-Crud/blob/master/icons/docker_overview.jpg)
+![preview image](https://raw.githubusercontent.com/mixaverros88/angular-Rest-Crud/master/icons/docker_overview.jpg)
 
 This example combines 2 containers inside a bridge network. The first container runs the angular app and the other container the json server.
 
