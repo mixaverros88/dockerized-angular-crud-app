@@ -5,7 +5,7 @@ RUN git clone https://github.com/mixaverros88/angular-Rest-Crud
 
 # Stage 2: build the artifact
 FROM node:10-alpine as builder
-COPY --from=downloadSourceCode /app/package.json /app/package-lock.json ./
+COPY --from=downloadSourceCode /app/angular-Rest-Crud/package.json /app/angular-Rest-Crud/package-lock.json ./
 
 ## Storing node modules on a separate layer will prevent unnecessary npm installs at each build
 RUN npm i && mkdir /ng-app && mv ./node_modules ./ng-app
