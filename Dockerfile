@@ -4,22 +4,16 @@ WORKDIR /app
 RUN git clone https://github.com/mixaverros88/angular-Rest-Crud
 
 # Stage 2: build the artifact
-FROM node:10-alpine as builder
-COPY --from=downloadSourceCode /app/angular-Rest-Crud/package.json /app/angular-Rest-Crud/package-lock.json ./
-
-## Storing node modules on a separate layer will prevent unnecessary npm installs at each build
-RUN npm i && mkdir /ng-app && mv ./node_modules ./ng-app
+FROM node:8-alpine as builder
+RUN mkdir /ng-app
+COPY --from=downloadSourceCode /app/angular-Rest-Crud /ng-app
 WORKDIR /ng-app
-COPY . .
-
-## Build the angular app in production mode and store the artifacts in dist folder
+RUN npm install -g @angular/cli@latest
+RUN npm install
 RUN npm run build
 
-### STAGE 3: Deploy ###
-FROM nginx:1.14.1-alpine
-
-## Copy our default nginx config
-COPY nginx/default.conf /etc/nginx/conf.d/
+### Stage 3: Deploy ###
+FROM nginx:1.17.8-alpine
 
 ## Remove default nginx website
 RUN rm -rf /usr/share/nginx/html/*
