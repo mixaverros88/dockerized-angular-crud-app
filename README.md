@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/mixaverros88/dockerized-angular-crud-app.svg?branch=master)](https://travis-ci.com/mixaverros88/dockerized-angular-crud-app)
+
 # Very simple CRUD operations with Angular
 
 ![preview image](https://raw.githubusercontent.com/mixaverros88/angular-Rest-Crud/master/icons/docker_overview.jpg)
