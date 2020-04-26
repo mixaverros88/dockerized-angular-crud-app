@@ -25,6 +25,7 @@ export class ProductComponent implements OnInit {
   price: number;
   products: any [];
   message: string;
+  title: string = 'Search';
   product: Product;
   selectedProduct: Product;
   // PAGINATION VALUES
