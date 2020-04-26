@@ -4,11 +4,13 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ConstantsService } from './common/services/constants.service';
+import { CustomPipePipe } from './pipes/custom-pipe.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
-    routingComponents
+    routingComponents,
+    CustomPipePipe
   ],
   imports: [
     BrowserModule,

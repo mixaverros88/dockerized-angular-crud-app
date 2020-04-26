@@ -1,22 +1,15 @@
-import { Product } from './../product/product';
-import { Component, OnInit, Injectable  } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { empty } from 'rxjs';
+import { Product } from '../common/models/product';
+import { Component, Injectable  } from '@angular/core';
+import { HttpClient} from '@angular/common/http';
 import {ConstantsService} from '../common/services/constants.service';
-
 
 @Component({
   selector: 'app-product',
-  templateUrl: './product.component.html',
-  styleUrls: ['./product.component.css']
+  templateUrl: './product.component.html'
 })
 
-
-
 @Injectable()
-export class ProductComponent implements OnInit {
-
-
+export class ProductComponent {
 
   URL_PRODUCT_PATH: string;
   id: number;
@@ -24,27 +17,33 @@ export class ProductComponent implements OnInit {
   color = '';
   price: number;
   products: any [];
+  jsonUrl: any;
   message: string;
-  title: string = 'Search';
-  product: Product;
+  title = 'Search';
   selectedProduct: Product;
   // PAGINATION VALUES
   howManyRows = 6;
   totalProducts: number;
-  curentPage = 1;
+  currentPage = 1;
   paginationLength = 0;
   orderByColumn = 'id';
   orderBy = 'asc';
-  // PAGINATION VALUES
 
-  constructor (private httpClient: HttpClient, private _constant: ConstantsService) {
-    //this.URL_PRODUCT_PATH = this._constant.baseAppUrl;
+  constructor (
+    private httpClient: HttpClient,
+    private _constant: ConstantsService) {
+    this._constant.getJSON().subscribe(
+      (data) => {
+        this.jsonUrl = data;
+        this.URL_PRODUCT_PATH =  this.jsonUrl.url ;
+        console.log(this.URL_PRODUCT_PATH);
+        this.URL_PRODUCT_PATH = 'http://localhost:3000/products';
+        console.log(this.URL_PRODUCT_PATH);
+        this.getProducts();
+      }
+    );
   }
 
-  ngOnInit() {
-    this.URL_PRODUCT_PATH = 'http://fake_server:3000/products';
-    this.getProducts();
-  }
 
   changeOrder(order) {
     this.orderBy = order;
@@ -61,8 +60,8 @@ export class ProductComponent implements OnInit {
     this.paginationLength = Math.ceil(totalProducts / howManyRows);
   }
 
-  getCurentPage(curentPage) {
-   this.curentPage = curentPage;
+  getCurrentPage(currentPage) {
+   this.currentPage = currentPage;
    this.getProducts();
   }
 
@@ -95,7 +94,7 @@ export class ProductComponent implements OnInit {
 
   getProducts() {
     let urlRName = this.URL_PRODUCT_PATH
-    + `?_page=${this.curentPage}`
+    + `?_page=${this.currentPage}`
     + `&_limit=${this.howManyRows}`
     + `&_order=${this.orderBy}`
     + `&_sort=${this.orderByColumn}`;
@@ -131,9 +130,12 @@ export class ProductComponent implements OnInit {
       price: price
     })
     .subscribe(
-      (data: any) => {
+
+      (response: any) => {
         this.message = 'Επιτυχής Εισαγωγή Προϊόντος';
-        this.products.push(data);   
+        const id = response.id;
+        const pro: Product = { id, name, color, price };
+        this.products.splice(0, 0, pro);
       }
     );
   }
@@ -146,21 +148,30 @@ export class ProductComponent implements OnInit {
       price: price
     })
     .subscribe(
-      (data: any) => {
+      (response: any) => {
+        console.log(response);
        this.message = 'Επιτυχής Επεξεργασία Προϊόντος';
        this.getProducts();
+      }, error => {
+        alert('error');
       }
     );
   }
 
-  deleteProduct(id: number ) {
-    this.httpClient.delete(this.URL_PRODUCT_PATH + `/${id}`)
+  deleteProduct(product: Product ) {
+    this.httpClient.delete(this.URL_PRODUCT_PATH + `/${product.id}`)
     .subscribe(
-      (data: any) => {
-        this.message = 'To προϊόν διεγάφει επιτυχώς';
-        this.products.pop();  
+      (response: Response) => {
+        const index = this.products.indexOf(product);
+        console.log(index);
+        this.products.slice(index, 1);
+        console.log(this.products);
+      },  (error: Response) => {
+        console.log(error.status);
+        alert('error');
       }
     );
+
   }
 
   onChangeOrderColumn(column: string) {
@@ -172,10 +183,11 @@ export class ProductComponent implements OnInit {
     this.selectedProduct = product;
   }
 
-  onChangeOrder(orderBy: string) {
-    this.orderBy = orderBy;
-    this.getProducts();
+  sizeOfPanginatio(): number {
+    let size: number;
+    if ( this.howManyRows < this.products.length) {
+      size = this.products.length / this.howManyRows;
+    }
+    return size;
   }
-
-
 }

@@ -1,22 +1,40 @@
 {
   "products": [
     {
-      "name": "T-SHIRT2",
-      "color": "blue 1223211",
+      "name": "T-SHIRT",
+      "color": "Red",
       "price": "120",
       "id": 1
     },
     {
-      "name": "TEST22332",
-      "color": "RED",
-      "price": "222111",
+      "name": "JEAN",
+      "color": "BLUE",
+      "price": "50",
+      "id": 2
+    },
+    {
+      "name": "blouson",
+      "color": "Purple",
+      "price": "150",
       "id": 3
     },
     {
-      "name": "",
-      "color": "",
-      "price": "",
+      "name": "JEAN Diesel",
+      "color": "Black",
+      "price": "45",
       "id": 4
+    },
+    {
+      "name": "JEAN Levis",
+      "color": "White",
+      "price": "80",
+      "id": 5
+    },
+    {
+      "name": "T-SHIRT",
+      "color": "Blue",
+      "price": "40",
+      "id": 6
     }
   ]
 }

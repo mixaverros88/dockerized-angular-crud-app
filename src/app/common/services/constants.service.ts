@@ -1,32 +1,18 @@
-import { Component, OnInit, Injectable  } from '@angular/core';
+import { Injectable  } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-export interface Url {
-  url: string;
-}
-
 @Injectable()
-export class ConstantsService implements OnInit {
+export class ConstantsService {
 
-  baseAppUrl: string;
+  private _jsonURL = 'assets/fake_server_ip.json';
 
   constructor(private http: HttpClient) {
-
     this.getJSON().subscribe(data => {
-      let   urls: Url[];
-      urls = data;
-      this.baseAppUrl = urls[0].url;
-      // console.log(this.urls[0].url);
-      console.log(this.baseAppUrl);
+      console.log('ConstantsService: ' + JSON.stringify( data ));
     });
-
   }
-
   public getJSON(): Observable<any> {
-    return this.http.get('assets/fake_server_ip.json');
+    return this.http.get(this._jsonURL);
   }
-  ngOnInit() {
-  }
-
 }
