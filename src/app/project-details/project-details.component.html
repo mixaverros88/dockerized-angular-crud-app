@@ -1,0 +1,39 @@
+<div class="container">
+  <p><a href="https://travis-ci.com/mixaverros88/dockerized-angular-crud-app"><embed src="https://travis-ci.com/mixaverros88/dockerized-angular-crud-app.svg?branch=master" /></a></p>
+  <h1 id="very-simple-crud-operations-with-angular">Very simple CRUD operations with Angular</h1>
+  <div class="figure">
+    <img src="https://raw.githubusercontent.com/mixaverros88/angular-Rest-Crud/master/icons/docker_overview.jpg" alt="preview image" /><p class="caption">preview image</p>
+  </div>
+  <p>This example combines 2 containers inside a bridge network. The first container runs the angular app and the other container the json server.</p>
+  <p>We use the bridge network in order to reach the json server without the IP address but with the container name.</p>
+  <p>You can use the run.sh file in order to spin up the containers or you can execute the following commands</p>
+  <pre><code>echo &quot;Step 1: run docker json server&quot;
+docker run  -d -p 3000:3000 --name fake_server williamyeh/json-server --watch products.json
+echo &quot;Step 2: replace the routes.json in to the running container&quot;
+docker cp routes.json fake_server:/usr/local/lib/node_modules/json-server/routes.json
+docker cp products.json fake_server:/data/products.json
+docker cp routes.json fake_server:/data/routes.json
+echo &quot;Step 3: run the image &quot;
+docker run -d -p 8080:80 --name angular_simple_crud_app mixaverross88/angular-rest-crud
+echo &quot;Step 4: create a network&quot;
+docker network create --driver bridge isolated_network
+echo &quot;Step 5: Assing the fake_server container into the network&quot;
+docker network connect isolated_network fake_server
+echo &quot;Step 6: Assing the angular_simple_crud_app container into the network&quot;
+docker network connect isolated_network angular_simple_crud_app</code></pre>
+  <div class="figure">
+    <img src="https://raw.githubusercontent.com/mixaverros88/angular-Rest-Crud/master/previewImage.jpg" alt="preview image" /><p class="caption">preview image</p>
+  </div>
+  <h1 id="the-main-purpose-of-the-following-instructions-is-if-you-dont-want-to-run-the-project-in-docker.">The main purpose of the following instructions is if you don't want to run the project in docker.</h1>
+  <p>Please change the value of URL_PRODUCT_PATH in ProductComponent in localhost:555</p>
+  <h2 id="json-server-instructions">json-server instructions</h2>
+  <ol style="list-style-type: decimal">
+    <li>Install server: npm install -g json-server</li>
+    <li>Navigate to the path where json server is installed (json-server-master folder).</li>
+    <li>Replace the file routes.json and add the file products.json (these files are stored in root folder of the project).</li>
+    <li>Run server (in the server folder): json-server --port 555 --routes routes.json --watch products.json</li>
+  </ol>
+  <h2 id="development-server">Development server</h2>
+  <p>Run <code>ng serve</code> for a dev server. Navigate to <code>http://localhost:4200/</code>. The app will automatically reload if you change any of the source files. This project was generated with <a href="https://github.com/angular/angular-cli">Angular CLI</a> version 9.1.0</p>
+
+</div>

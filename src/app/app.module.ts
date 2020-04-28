@@ -5,12 +5,16 @@ import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ConstantsService } from './common/services/constants.service';
 import { CustomPipePipe } from './pipes/custom-pipe.pipe';
+import { NavigationbarComponent } from './navigationbar/navigationbar.component';
+import { ProjectDetailsComponent } from './project-details/project-details.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     routingComponents,
-    CustomPipePipe
+    CustomPipePipe,
+    NavigationbarComponent,
+    ProjectDetailsComponent
   ],
   imports: [
     BrowserModule,

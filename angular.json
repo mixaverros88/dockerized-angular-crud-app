@@ -24,7 +24,6 @@
             ],
             "styles": [
               "styles.css"
-            //, "../node_modules/bootstrap/dist/css/bootstrap.min.css"
             ],
             "scripts": []
           },
@@ -124,5 +123,8 @@
       }
     }
   },
-  "defaultProject": "restFull"
+  "defaultProject": "restFull",
+  "cli": {
+    "analytics": false
+  }
 }
