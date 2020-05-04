@@ -16,7 +16,7 @@ export class ProductComponent {
   name = '';
   color = '';
   price: number;
-  products: any [];
+  products = [];
   jsonUrl: any;
   message: string;
   title = 'Search';
@@ -36,14 +36,10 @@ export class ProductComponent {
       (data) => {
         this.jsonUrl = data;
         this.URL_PRODUCT_PATH =  this.jsonUrl.url ;
-        console.log(this.URL_PRODUCT_PATH);
-        this.URL_PRODUCT_PATH = 'http://localhost:3000/products';
-        console.log(this.URL_PRODUCT_PATH);
         this.getProducts();
       }
     );
   }
-
 
   changeOrder(order) {
     this.orderBy = order;
@@ -130,12 +126,11 @@ export class ProductComponent {
       price: price
     })
     .subscribe(
-
       (response: any) => {
         this.message = 'Επιτυχής Εισαγωγή Προϊόντος';
         const id = response.id;
         const pro: Product = { id, name, color, price };
-        this.products.splice(0, 0, pro);
+        this.products.unshift(pro);
       }
     );
   }
@@ -162,10 +157,12 @@ export class ProductComponent {
     this.httpClient.delete(this.URL_PRODUCT_PATH + `/${product.id}`)
     .subscribe(
       (response: Response) => {
+        console.log(response);
+        this.message = 'Επιτυχής Διαγραφή Προϊόντος';
         const index = this.products.indexOf(product);
-        console.log(index);
-        this.products.slice(index, 1);
-        console.log(this.products);
+        if (index !== -1) {
+          this.products.splice(index, 1);
+        }
       },  (error: Response) => {
         console.log(error.status);
         alert('error');
