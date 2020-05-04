@@ -6,7 +6,6 @@
 
 This example combines 2 containers inside a bridge network. The first container runs the angular app and the other container the json server.
 
-We use the bridge network in order to reach the json server without the IP address but with the container name.
 
 You can use the run.sh file in order to spin up the containers or you can execute the following commands
 ```
@@ -17,7 +16,7 @@ docker cp routes.json fake_server:/usr/local/lib/node_modules/json-server/routes
 docker cp products.json fake_server:/data/products.json
 docker cp routes.json fake_server:/data/routes.json
 echo "Step 3: run the image "
-docker run -d -p 8080:80 --name angular_simple_crud_app mixaverross88/angular-rest-crud
+docker run -d -p 8080:80 --name angular_simple_crud_app mixaverross88/angular-rest-crud:1.2
 echo "Step 4: create a network"
 docker network create --driver bridge isolated_network 
 echo "Step 5: Assing the fake_server container into the network"
@@ -30,7 +29,7 @@ docker network connect isolated_network angular_simple_crud_app
 
 # The main purpose of the following instructions is if you don't want to run the project in docker.
 
-Please change the value of URL_PRODUCT_PATH in ProductComponent in localhost:555
+Please change the value of url in fake_server_ip.json (you will find it in asset folder) to localhost:555
 
 ## json-server instructions
 
