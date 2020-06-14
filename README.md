@@ -28,7 +28,7 @@ docker network connect isolated_network angular_simple_crud_app
 
 ![preview image](https://raw.githubusercontent.com/mixaverros88/angular-Rest-Crud/master/previewImage.jpg)
 
-# The main purpose of the following instructions is if you don't want to run the project in docker.
+# If you don't want to run this project with docker you can follow these instruction.
 
 Please change the value of url in fake_server_ip.json (you will find it in asset folder) to localhost:555
 
