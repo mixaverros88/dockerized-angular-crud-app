@@ -1,5 +1,3 @@
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=mixaverros88_dockerized-angular-crud-app&metric=alert_status)](https://sonarcloud.io/dashboard?id=mixaverros88_dockerized-angular-crud-app)
-[![Build Status](https://travis-ci.com/mixaverros88/dockerized-angular-crud-app.svg?branch=master)](https://travis-ci.com/mixaverros88/dockerized-angular-crud-app)
 
 # Very simple CRUD operations with Angular
 
